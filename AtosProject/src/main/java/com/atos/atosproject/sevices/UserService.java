@@ -4,7 +4,7 @@ import com.atos.atosproject.entities.UserEntity;
 import com.atos.atosproject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
+
 
 import java.io.InvalidObjectException;
 
@@ -76,15 +76,14 @@ public class UserService {
         private void checkUser( UserEntity user ) throws InvalidObjectException {
 
             // check  name
-            Pattern VALID_NAME=Pattern.compile("[A-Za-z]{3,25}",Pattern.CASE_INSENSITIVE);
+            Pattern VALID_NAME=Pattern.compile("[A-Za-z]{3,25}");
             Matcher matcher = VALID_NAME.matcher(user.getName());
            // return matcher.find();
-            if (!matcher.find()) {
+            if (!matcher.find() || user.getName().length()<2) {
                 throw new InvalidObjectException(" invalide Name");
             }
             
             // check country
-System.out.println(user.getCountry().toLowerCase());
             if (user.getCountry().length() < 3 ) {
                 throw new InvalidObjectException(" invalide Country");
             }else {
